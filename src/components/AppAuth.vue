@@ -57,40 +57,45 @@
                         </button>
                     </form>
                     <!-- Registration Form -->
-                    <form v-show="tab == 'register'">
+                    <vee-form v-show="tab == 'register'" :validation-schema="schema">
                         <!-- Name -->
                         <div class="mb-3">
                             <label class="inline-block mb-2">Name</label>
-                            <input type="text"
+                            <vee-field name="name" type="text"
                                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                                 placeholder="Enter Name" />
+                            <error-message class="text-red-600" name="name" />
                         </div>
                         <!-- Email -->
                         <div class="mb-3">
                             <label class="inline-block mb-2">Email</label>
-                            <input type="email"
+                            <vee-field name="email" type="email"
                                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                                 placeholder="Enter Email" />
+                            <error-message class="text-red-600" name="email" />
                         </div>
                         <!-- Age -->
                         <div class="mb-3">
                             <label class="inline-block mb-2">Age</label>
-                            <input type="number"
+                            <vee-field name="age" type="number"
                                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded" />
+                            <error-message class="text-red-600" name="age" />
                         </div>
                         <!-- Password -->
                         <div class="mb-3">
                             <label class="inline-block mb-2">Password</label>
-                            <input type="password"
+                            <vee-field name="password" type="password"
                                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                                 placeholder="Password" />
+                            <error-message class="text-red-600" name="password" />
                         </div>
                         <!-- Confirm Password -->
                         <div class="mb-3">
                             <label class="inline-block mb-2">Confirm Password</label>
-                            <input type="password"
+                            <vee-field name="confirm_password" type="password"
                                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                                 placeholder="Confirm Password" />
+                            <error-message class="text-red-600" name="confirm_password" />
                         </div>
                         <!-- Country -->
                         <div class="mb-3">
@@ -111,7 +116,7 @@
                             class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700">
                             Submit
                         </button>
-                    </form>
+                    </vee-form>
                 </div>
             </div>
         </div>
@@ -126,7 +131,14 @@ export default {
     name: 'AppAuth',
     data() {
         return {
-            tab: 'login'
+            tab: 'login',
+            schema: {
+                name: 'required|min:3|max:32|alpha_spaces',
+                email: 'required|min:1|max:40|email',
+                age: 'required|min_value:18|max_value:100',
+                password: 'required|min:3|max:32',
+                confirm_password: 'confirmed:@password',
+            }
         }
     },
     computed: {
