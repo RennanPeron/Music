@@ -57,7 +57,8 @@
                         </button>
                     </form>
                     <!-- Registration Form -->
-                    <vee-form v-show="tab == 'register'" :validation-schema="schema">
+                    <vee-form v-show="tab == 'register'" @submit="register" :validation-schema="schema"
+                        :initial-values="userData">
                         <!-- Name -->
                         <div class="mb-3">
                             <label class="inline-block mb-2">Name</label>
@@ -84,10 +85,14 @@
                         <!-- Password -->
                         <div class="mb-3">
                             <label class="inline-block mb-2">Password</label>
-                            <vee-field name="password" type="password"
-                                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                                placeholder="Password" />
-                            <error-message class="text-red-600" name="password" />
+                            <vee-field name="password" v-slot="{ field, errors }" :bails="false">
+                                <input type="password"
+                                    class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
+                                    placeholder="Password" v-bind="field" />
+                                <div class="text-red-600" v-for="error in errors" :key="error">
+                                    {{ error }}
+                                </div>
+                            </vee-field>
                         </div>
                         <!-- Confirm Password -->
                         <div class="mb-3">
@@ -100,17 +105,20 @@
                         <!-- Country -->
                         <div class="mb-3">
                             <label class="inline-block mb-2">Country</label>
-                            <select
+                            <vee-field as="select" name="country"
                                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded">
                                 <option value="USA">USA</option>
                                 <option value="Mexico">Mexico</option>
                                 <option value="Germany">Germany</option>
-                            </select>
+                                <option value="Brazil">Brazil</option>
+                            </vee-field>
+                            <error-message class="text-red-600" name="country" />
                         </div>
                         <!-- TOS -->
                         <div class="mb-3 pl-6">
-                            <input type="checkbox" class="w-4 h-4 float-left -ml-6 mt-1 rounded" />
+                            <vee-field name="tos" type="checkbox" value="1" class="w-4 h-4 float-left -ml-6 mt-1 rounded" />
                             <label class="inline-block">Accept terms of service</label>
+                            <error-message class="text-red-600" name="tos" />
                         </div>
                         <button type="submit"
                             class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700">
@@ -136,9 +144,19 @@ export default {
                 name: 'required|min:3|max:32|alpha_spaces',
                 email: 'required|min:1|max:40|email',
                 age: 'required|min_value:18|max_value:100',
-                password: 'required|min:3|max:32',
-                confirm_password: 'confirmed:@password',
+                password: 'required|min:9|max:32|excluded:password',
+                confirm_password: 'passwords_mismatch:@password',
+                country: 'required|country_excluded:Brazil',
+                tos: 'tos'
+            },
+            userData: {
+                country: 'USA'
             }
+        }
+    },
+    methods: {
+        register(values) {
+            console.log(values)
         }
     },
     computed: {
