@@ -4,6 +4,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import VeeValidadePlugin from './includes/validate.js'
+import './includes/firebase.js'
 
 import './assets/base.css'
 import './assets/main.css'
