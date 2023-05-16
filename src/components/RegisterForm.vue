@@ -11,6 +11,19 @@
                 placeholder="Enter Name" />
             <error-message class="text-red-600" name="name" />
         </div>
+        <!-- Listener/Artist -->
+        <div class="mb-3">
+            <label class="inline-block mb-2">
+                Are you a artist or listener?
+            </label>
+            <vee-field name="role" as="select"
+                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded">
+                <option value="artist">Artist</option>
+                <option value="listener">Listener</option>
+                <option value="both">Both</option>
+            </vee-field>
+            <error-message class="text-red-600" name="role" />
+        </div>
         <!-- Email -->
         <div class="mb-3">
             <label class="inline-block mb-2">Email</label>
@@ -73,8 +86,11 @@
 </template>
 
 <script>
-import { auth } from "@/includes/firebase";
+import { auth, usersCollection } from "@/includes/firebase";
 import { ErrorMessage } from "vee-validate"
+
+import { mapWritableState } from "pinia";
+import useUserStore from "@/stores/user"
 
 export default {
     name: "RegisterForm",
@@ -82,11 +98,12 @@ export default {
         return {
             schema: {
                 name: "required|min:3|max:32|alpha_spaces",
+                role: "required",
                 email: "required|min:1|max:40|email",
                 age: "required|min_value:18|max_value:100",
                 password: "required|min:9|max:32|excluded:password",
                 confirm_password: "passwords_mismatch:@password",
-                country: "required|country_excluded:Brazil",
+                country: "required",
                 tos: "tos"
             },
             userData: {
@@ -97,6 +114,9 @@ export default {
             reg_alert_variant: "bg-blue-500",
             reg_alert_msg: "Please wait! Your account is being created.",
         }
+    },
+    computed: {
+        ...mapWritableState(useUserStore, ["userLoggedIn"])
     },
     methods: {
         async register(values) {
@@ -117,6 +137,23 @@ export default {
                 this.reg_alert_msg = "An unexpected error occurred. Please try again later."
                 return
             }
+
+            try {
+                await usersCollection.add({
+                    name: values.name,
+                    role: values.role,
+                    email: values.email,
+                    age: values.age,
+                    country: values.country
+                })
+            } catch (err) {
+                this.reg_in_submission = false
+                this.reg_alert_variant = "bg-red-500"
+                this.reg_alert_msg = "An unexpected error occurred. Please try again later."
+                return
+            }
+
+            this.userLoggedIn = true
 
             this.reg_alert_variant = "bg-green-500"
             this.reg_alert_msg = "Success! Your account has been created."
