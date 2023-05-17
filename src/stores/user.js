@@ -8,15 +8,22 @@ export default defineStore('user', {
   actions: {
     async register(values) {
       // Entra com os valores do email e senha para o registro no banco de dados.
-      await auth.createUserWithEmailAndPassword(values.email, values.password)
+      const userCredential = await auth.createUserWithEmailAndPassword(
+        values.email,
+        values.password
+      )
 
       // Valores para serem adicionados ao BD
-      await usersCollection.add({
+      await usersCollection.doc(userCredential.user.uid).set({
         name: values.name,
         role: values.role,
         email: values.email,
         age: values.age,
         country: values.country
+      })
+
+      userCredential.user.updateProfile({
+        displayName: values.name
       })
 
       // Autenticação
