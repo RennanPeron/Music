@@ -30,6 +30,16 @@ export default defineStore('user', {
       this.userLoggedIn = true
 
       // Usando actions não precisa lidar com erros aqui e sim no componente
+    },
+    async authenticate(values) {
+      await auth.signInWithEmailAndPassword(values.email, values.password)
+
+      this.userLoggedIn = true
+    },
+    async signOut() {
+      await auth.signOut()
+
+      this.userLoggedIn = false
     }
   }
 })
