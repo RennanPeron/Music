@@ -130,3 +130,20 @@
         </div>
     </section>
 </template>
+
+<script>
+// import useUserStore from "@/stores/user"
+
+export default {
+    name: "ManageView",
+    // beforeRouteEnter(to, from, next) {
+    //     const user = useUserStore()
+
+    //     if (user.userLoggedIn) {
+    //         next()
+    //     } else {
+    //         next({ name: "home" })
+    //     }
+    // }
+}
+</script>

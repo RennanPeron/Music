@@ -17,6 +17,7 @@
     "firebase": "^8.10.1",
     "pinia": "^2.0.32",
     "vee-validate": "^4.9.1",
+    "vls": "^0.8.5",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },
@@ -36,6 +37,7 @@
     "start-server-and-test": "^2.0.0",
     "tailwindcss": "^3.3.2",
     "vite": "^4.1.4",
-    "vitest": "^0.29.1"
+    "vitest": "^0.29.1",
+    "volar-service-vetur": "latest"
   }
 }
