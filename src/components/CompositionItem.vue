@@ -2,7 +2,7 @@
     <div class="border border-gray-200 p-3 mb-4 rounded">
         <div v-if="!show_form">
             <h4 class="inline-block text-2xl font-bold">{{ song.modified_name }}</h4>
-            <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right">
+            <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right" @click="remove">
                 <i class="fa fa-times"></i>
             </button>
             <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right"
@@ -44,6 +44,7 @@
 <script>
 import { ErrorMessage } from 'vee-validate';
 import { songsCollection } from "@/includes/firebase"
+import { storage } from '@/includes/firebase';
 
 export default {
     name: 'CompositionItem',
@@ -53,6 +54,10 @@ export default {
             required: true
         },
         updateSongs: {
+            type: Function,
+            required: true
+        },
+        removeSong: {
             type: Function,
             required: true
         },
@@ -94,6 +99,16 @@ export default {
             this.alert_variant = "bg-green-400"
             this.alert_message = "Song has been successfully updated."
             this.updateSongs(this.index, values)
+        },
+        async remove() {
+            const storageRef = storage.ref()
+            const songRef = storageRef.child(`/songs/${this.song.original_name}`)
+
+            await songRef.delete()
+
+            await songsCollection.doc(this.song.docID).delete()
+
+            this.removeSong(this.index)
         }
     },
     components: {
