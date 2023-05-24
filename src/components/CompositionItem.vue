@@ -17,14 +17,14 @@
             <vee-form :validation-schema="schema" @submit="edit" :initial-values="song">
                 <div class="mb-3">
                     <label class="inline-block mb-2">Song Title</label>
-                    <vee-field type="text" name="modified_name"
+                    <vee-field @input="updateUnsavedFlag(true)" type="text" name="modified_name"
                         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                         placeholder="Enter Song Title" />
                     <error-message class="text-red-600" name="modified_name" />
                 </div>
                 <div class="mb-3">
                     <label class="inline-block mb-2">Genre</label>
-                    <vee-field type="text" name="genre"
+                    <vee-field @input="updateUnsavedFlag(true)" type="text" name="genre"
                         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                         placeholder="Enter Genre" />
                     <error-message class="text-red-600" name="genre" />
@@ -33,7 +33,7 @@
                     Submit
                 </button>
                 <button :disabled="in_submission" type="button" class="py-1.5 px-3 rounded text-white bg-gray-600"
-                    @click.prevent="show_form = show_alert = false">
+                    @click.prevent="show_form = show_alert = false; updateUnsavedFlag(false)">
                     Go Back
                 </button>
             </vee-form>
@@ -60,6 +60,9 @@ export default {
         removeSong: {
             type: Function,
             required: true
+        },
+        updateUnsavedFlag: {
+            type: Function,
         },
         index: {
             type: Number,
@@ -99,6 +102,7 @@ export default {
             this.alert_variant = "bg-green-400"
             this.alert_message = "Song has been successfully updated."
             this.updateSongs(this.index, values)
+            this.updateUnsavedFlag(false)
         },
         async remove() {
             const storageRef = storage.ref()

@@ -14,7 +14,8 @@
                     <div class="p-6">
                         <!-- Composition Items -->
                         <composition-item v-for="(song, i) in songs" :key="song.docID" :song="song"
-                            :updateSongs="updateSongs" :removeSong="removeSong" :index="i" />
+                            :updateSongs="updateSongs" :removeSong="removeSong" :updateUnsavedFlag="updateUnsavedFlag"
+                            :index="i" />
                     </div>
                 </div>
             </div>
@@ -38,6 +39,7 @@ export default {
     data() {
         return {
             songs: [],
+            unsaved_flag: false
         }
     },
     async created() {
@@ -60,6 +62,17 @@ export default {
             }
 
             this.songs.push(song)
+        },
+        updateUnsavedFlag(result) {
+            this.unsaved_flag = result
+        }
+    },
+    beforeRouteLeave(to, from, next) {
+        if (!this.unsaved_flag) {
+            next()
+        } else {
+            const leave = confirm("You have unsaved changes. Are you sure you want to leave?")
+            next(leave)
         }
     }
     // beforeRouteEnter(to, from, next) {
