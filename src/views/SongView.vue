@@ -15,15 +15,34 @@
             </div>
         </div>
     </section>
-    <comment-form :id="$route.params.id" @count_change="song.comment_count++" :updateComments="updateComments"
-        :song="song" />
+    <!-- Form -->
+    <section class="container mx-auto mt-6">
+        <div class="bg-white rounded border border-gray-200 relative flex flex-col">
+            <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
+                <!-- Comment Count -->
+                <span class="card-title">Comments ({{ song.comment_count }})</span>
+                <i class="fa fa-comments float-right text-green-400 text-2xl"></i>
+            </div>
+            <div class="p-6">
+                <comment-form :id="$route.params.id" @count_change="song.comment_count++; " :getComments="getComments"
+                    :song="song" />
+                <!-- Sort Comments -->
+                <select
+                    class="block mt-4 py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
+                    v-model="sort">
+                    <option value="1">Latest</option>
+                    <option value="2">Oldest</option>
+                </select>
+            </div>
+        </div>
+    </section>
     <!-- Comments -->
-    <ul class="container mx-auto" v-for="commentary in comments" :key="commentary.docID">
-        <li class="p-6 bg-gray-50 border border-gray-200">
+    <ul class="container mx-auto">
+        <li class="p-6 bg-gray-50 border border-gray-200" v-for="commentary in sortedComments" :key="commentary.docID">
             <!-- Comment Author -->
             <div class="mb-5">
                 <div class="font-bold">{{ commentary.author }}</div>
-                <time>5 mins ago</time>
+                <time>{{ updateTime(new Date(commentary.datePosted)) }}</time>
             </div>
 
             <p>
@@ -46,7 +65,9 @@ export default {
     data() {
         return {
             song: {},
-            comments: []
+            comments: [],
+            sort: "1",
+            currentDate: new Date()
         }
     },
     async created() {
@@ -60,22 +81,45 @@ export default {
         this.song = docSnapshot.data()
 
         this.getComments()
-
+    },
+    computed: {
+        sortedComments() {
+            return this.comments.slice().sort((a, b) => {
+                if (this.sort === "1") {
+                    return new Date(b.datePosted) - new Date(a.datePosted)
+                } else
+                    return new Date(a.datePosted) - new Date(b.datePosted)
+            })
+        }
     },
     methods: {
         async getComments() {
             const commentSnapshot = await commentsCollection.where('song_id', '==', this.$route.params.id).get()
 
+            this.comments = []
+
             commentSnapshot.forEach((document) => {
-                const comment = {
-                    ...document.data(),
-                    docID: document.id
-                }
-                this.comments.push(comment)
+                this.comments.push({
+                    docID: document.id,
+                    ...document.data()
+                })
             })
         },
-        updateComments(comment) {
-            this.comments.unshift(comment)
+        updateTime(date) {
+            const diff = Math.floor((this.currentDate - date) / (1000 * 60)) // diferença em minutos
+            const minutesInHour = 60
+            const minutesInDay = 1440 // 60 minutos * 24 horas
+
+            if (diff < 1) {
+                return 'Just now.'
+            }
+
+            return diff < minutesInHour ?
+                `${diff} minutes ago.`
+                : diff < minutesInDay ?
+                    `${Math.floor(diff / minutesInHour)} hour${diff < minutesInHour * 2 ? '' : 's'} ago.`
+                    : `${Math.floor(diff / minutesInDay)} day${diff < minutesInDay * 2 ? '' : 's'} ago.`
+
         }
     }
 }
