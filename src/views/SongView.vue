@@ -24,8 +24,8 @@
                 <i class="fa fa-comments float-right text-green-400 text-2xl"></i>
             </div>
             <div class="p-6">
-                <comment-form :id="$route.params.id" @count_change="song.comment_count++; " :getComments="getComments"
-                    :song="song" />
+                <comment-form :id="$route.params.id" @count_change="song.comment_count = comments.length + 1"
+                    :getComments="getComments" :song="song" />
                 <!-- Sort Comments -->
                 <select
                     class="block mt-4 py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -110,7 +110,7 @@ export default {
             const minutesInHour = 60
             const minutesInDay = 1440 // 60 minutos * 24 horas
 
-            if (diff < 1) {
+            if (diff <= 1) {
                 return 'Just now.'
             }
 

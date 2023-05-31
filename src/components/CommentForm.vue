@@ -76,14 +76,14 @@ export default {
                 // Adiciona o comentário ao BD
                 await commentsCollection.add(commentary)
 
+                resetForm()
+
+                this.getComments()
+
                 this.$emit('count_change')
 
                 // Adiciona +1 ao contador.
                 await songsCollection.doc(this.id).update(this.song)
-
-                resetForm()
-
-                this.getComments()
 
                 // Feedback ao usuário
                 this.in_submission = false
