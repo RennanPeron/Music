@@ -7,7 +7,7 @@
             <!-- Play/Pause Button -->
             <button @click.prevent="newSong(song)" type="button"
                 class="z-50 h-24 w-24 text-3xl bg-white text-black rounded-full focus:outline-none">
-                <i class="fas fa-play"></i>
+                <i class="fas" :class="{ 'fa-play': !playButton, 'fa-pause': playButton }"></i>
             </button>
             <div class="z-50 text-left ml-8">
                 <!-- Song Info -->
@@ -56,7 +56,7 @@
 <script>
 import { songsCollection, commentsCollection } from "@/includes/firebase"
 
-import { mapActions } from "pinia"
+import { mapActions, mapState } from "pinia"
 import usePlayerStore from '@/stores/player'
 
 import CommentForm from "../components/CommentForm.vue"
@@ -91,6 +91,7 @@ export default {
         this.getComments()
     },
     computed: {
+        ...mapState(usePlayerStore, ["playing", "current_song"]),
         sortedComments() {
             return this.comments.slice().sort((a, b) => {
                 if (this.sort === "1") {
@@ -98,6 +99,13 @@ export default {
                 } else
                     return new Date(a.datePosted) - new Date(b.datePosted)
             })
+        },
+        playButton() {
+            if (this.current_song.modified_name != this.song.modified_name) {
+                return false
+            }
+
+            return this.playing
         }
     },
     methods: {
@@ -115,7 +123,7 @@ export default {
             })
         },
         updateTime(date) {
-            const diff = Math.floor((this.currentDate - date) / (1000 * 60)) // diferença em minutos
+            const diff = Math.floor((this.currentDate - date) / (1000 * 60)) || 0 // diferença em minutos
             const minutesInHour = 60
             const minutesInDay = 1440 // 60 minutos * 24 horas
 
