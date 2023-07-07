@@ -7,7 +7,27 @@
   "song": {
     "comment_count": "No comments | 1 comment | {count} comments"
   },
+  "header": {
+    "about": "About",
+    "login": "Login/Register",
+    "manage": "Manage",
+    "logout": "Logout",
+    "account": "Your Account"
+  },
   "register": {
+    "register": "Register",
+    "name": "Name",
+    "role": "Are you a artist or listener?",
+    "artist": "Artist",
+    "listener": "Listener",
+    "both": "Both",
+    "age": "Age",
+    "password": "Password",
+    "confirm": "Confirm Password",
+    "country": "Country",
+    "usa": "USA",
+    "germany": "Germany",
+    "brazil": "Brazil",
     "accept": "I accept Music's {0}",
     "tos": "Terms of Service"
   }

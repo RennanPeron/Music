@@ -11,17 +11,18 @@
                 <ul class="flex flex-row mt-1">
                     <!-- Navigation Links -->
                     <li>
-                        <router-link class="px-2 text-white" :to="{ name: 'about' }">About</router-link>
+                        <router-link class="px-2 text-white" :to="{ name: 'about' }">{{ $t("header.about") }}</router-link>
                     </li>
                     <li v-if="!userStore.userLoggedIn">
-                        <a class="px-2 text-white" href="#" @click.prevent="toggleAuthModal">Login / Register</a>
+                        <a class="px-2 text-white" href="#" @click.prevent="toggleAuthModal"> {{ $t("header.login") }} </a>
                     </li>
                     <template v-else>
                         <li>
-                            <router-link class="px-2 text-white" :to="{ name: 'manage' }">Manage</router-link>
+                            <router-link class="px-2 text-white"
+                                :to="{ name: 'manage' }">{{ t$("header.manage") }}</router-link>
                         </li>
                         <li>
-                            <a class="px-2 text-white" href="#" @click.prevent="signOut">Logout</a>
+                            <a class="px-2 text-white" href="#" @click.prevent="signOut">{{ $t("header.logout") }}</a>
                         </li>
                     </template>
                 </ul>

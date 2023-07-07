@@ -15,7 +15,7 @@
                 <div class="py-4 text-left px-6">
                     <!--Title-->
                     <div class="flex justify-between items-center pb-4">
-                        <p class="text-2xl font-bold">Your Account</p>
+                        <p class="text-2xl font-bold">{{ $t("header.account") }}</p>
                         <!-- Modal Close Button -->
                         <div class="modal-close cursor-pointer z-50" @click.prevent="modalVisibility = false">
                             <i class="fas fa-times"></i>
@@ -31,7 +31,8 @@
                         </li>
                         <li class="flex-auto text-center">
                             <a class="block rounded py-3 px-4 transition" href="#" @click.prevent="tab = 'register'"
-                                :class="tab === 'register' ? 'hover:text-white text-white bg-blue-600' : 'hover:text-blue-600'">Register</a>
+                                :class="tab === 'register' ? 'hover:text-white text-white bg-blue-600' : 'hover:text-blue-600'">{{
+                                    $t("register.register") }}</a>
                         </li>
                     </ul>
 

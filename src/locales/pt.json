@@ -7,7 +7,27 @@
   "song": {
     "comment_count": "Nenhum comentário | 1 comentário | {count} comentários"
   },
+  "header": {
+    "about": "Sobre",
+    "login": "Login/Registro",
+    "manage": "Gerenciar",
+    "logout": "Logout",
+    "account": "Sua Conta"
+  },
   "register": {
+    "register": "Registro",
+    "name": "Nome",
+    "role": "Você é um ouvinte ou um artista?",
+    "artist": "Artista",
+    "listener": "Ouvinte",
+    "both": "Ambos",
+    "age": "Idade",
+    "password": "Senha",
+    "confirm": "Confirmação de Senha",
+    "country": "País",
+    "usa": "EUA",
+    "germany": "Alemanha",
+    "brazil": "Brasil",
     "accept": "Eu aceito os {0} de Music",
     "tos": "Termos de Serviço"
   }
