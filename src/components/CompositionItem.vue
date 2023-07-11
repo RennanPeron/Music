@@ -16,25 +16,25 @@
             </div>
             <vee-form :validation-schema="schema" @submit="edit" :initial-values="song">
                 <div class="mb-3">
-                    <label class="inline-block mb-2">Song Title</label>
+                    <label class="inline-block mb-2">{{ $t("manage.title") }}</label>
                     <vee-field @input="updateUnsavedFlag(true)" type="text" name="modified_name"
                         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                         placeholder="Enter Song Title" />
                     <error-message class="text-red-600" name="modified_name" />
                 </div>
                 <div class="mb-3">
-                    <label class="inline-block mb-2">Genre</label>
+                    <label class="inline-block mb-2">{{ $t("manage.genre") }}</label>
                     <vee-field @input="updateUnsavedFlag(true)" type="text" name="genre"
                         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                         placeholder="Enter Genre" />
                     <error-message class="text-red-600" name="genre" />
                 </div>
                 <button :disabled="in_submission" type="submit" class="py-1.5 px-3 rounded text-white bg-green-600">
-                    Submit
+                    {{ $t("register.submit") }}
                 </button>
                 <button :disabled="in_submission" type="button" class="py-1.5 px-3 rounded text-white bg-gray-600"
                     @click.prevent="show_form = show_alert = false; updateUnsavedFlag(false)">
-                    Go Back
+                    {{ $t("manage.back") }}
                 </button>
             </vee-form>
         </div>

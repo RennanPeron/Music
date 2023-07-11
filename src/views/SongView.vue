@@ -45,7 +45,7 @@
                 <!-- Comment Author -->
                 <div class="mb-5">
                     <div class="font-bold">{{ commentary.author }}</div>
-                    <time>{{ updateTime(new Date(commentary.datePosted)) }}</time>
+                    <time>{{ getTimeDiff(new Date(commentary.datePosted)) }}</time>
                 </div>
 
                 <p>
@@ -74,7 +74,8 @@ export default {
             song: {},
             comments: [],
             sort: "1",
-            currentDate: new Date()
+            currentDate: new Date(),
+            timeType: ''
         }
     },
     async created() {
@@ -125,21 +126,28 @@ export default {
                 })
             })
         },
-        updateTime(date) {
+        getTimeDiff(date) {
             const diff = Math.floor((this.currentDate - date) / (1000 * 60)) || 0 // diferença em minutos
             const minutesInHour = 60
             const minutesInDay = 1440 // 60 minutos * 24 horas
 
             if (diff <= 1) {
-                return 'Just now.'
+                return ''
             }
 
-            return diff < minutesInHour ?
-                `${diff} minutes ago.`
-                : diff < minutesInDay ?
-                    `${Math.floor(diff / minutesInHour)} hour${diff < minutesInHour * 2 ? '' : 's'} ago.`
-                    : `${Math.floor(diff / minutesInDay)} day${diff < minutesInDay * 2 ? '' : 's'} ago.`
-
+            if (this.$i18n.locale === 'pt') {
+                return diff < minutesInHour ?
+                    `${diff} minutos atrás.`
+                    : diff < minutesInDay ?
+                        `${Math.floor(diff / minutesInHour)} hora${diff < minutesInHour * 2 ? '' : 's'} atrás.`
+                        : `${Math.floor(diff / minutesInDay)} dia${diff < minutesInDay * 2 ? '' : 's'} atrás.`
+            } else {
+                return diff < minutesInHour ?
+                    `${diff} minutes ago.`
+                    : diff < minutesInDay ?
+                        `${Math.floor(diff / minutesInHour)} hour${diff < minutesInHour * 2 ? '' : 's'} ago.`
+                        : `${Math.floor(diff / minutesInDay)} day${diff < minutesInDay * 2 ? '' : 's'} ago.`
+            }
         }
     },
     watch: {

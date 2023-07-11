@@ -18,8 +18,8 @@
                     </li>
                     <template v-else>
                         <li>
-                            <router-link class="px-2 text-white"
-                                :to="{ name: 'manage' }">{{ t$("header.manage") }}</router-link>
+                            <router-link class="px-2 text-white" :to="{ name: 'manage' }">{{ $t("header.manage")
+                            }}</router-link>
                         </li>
                         <li>
                             <a class="px-2 text-white" href="#" @click.prevent="signOut">{{ $t("header.logout") }}</a>

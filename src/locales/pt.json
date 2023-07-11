@@ -29,6 +29,14 @@
     "germany": "Alemanha",
     "brazil": "Brasil",
     "accept": "Eu aceito os {0} de Music",
-    "tos": "Termos de Serviço"
+    "tos": "Termos de Serviço",
+    "submit": "Enviar"
+  },
+  "manage": {
+    "drop": "Arraste seus arquivos aqui",
+    "my_songs": "Minhas músicas",
+    "back": "Voltar",
+    "title": "Título",
+    "genre": "Gênero"
   }
 }

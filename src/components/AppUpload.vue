@@ -11,7 +11,7 @@
                 @dragstart.prevent.stop="" @dragenter.prevent.stop="is_dragover = true"
                 @dragover.prevent.stop="is_dragover = true" @dragleave.prevent.stop="is_dragover = false"
                 @dragexit.prevent.stop="" @drop.prevent.stop="upload">
-                <h5>Drop your files here</h5>
+                <h5>{{ $t("manage.drop") }}</h5>
             </div>
             <input type="file" multiple @change="upload($event)">
             <hr class="my-6" />
