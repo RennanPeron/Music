@@ -55,6 +55,18 @@ export default {
                     // Se não for do tipo mp3, encerra o upload
                 }
 
+                if (!navigator.onLine) {
+                    this.uploads.push({
+                        task: {},
+                        current_progress: 100,
+                        name: file.name,
+                        variant: 'bg-red-400',
+                        icon: 'fas fa-times',
+                        text_class: 'text-red-400'
+                    })
+                    return
+                }
+
                 const storageRef = storage.ref() // Valor que já passamos pro config: 'music-17504.appspot.com'
                 const songsRef = storageRef.child(`songs/${file.name}`) // É melhor criar o reference pra cada arquivo, fica assim: 'music-17504.appspot.com/songs/example.mp3'
 
