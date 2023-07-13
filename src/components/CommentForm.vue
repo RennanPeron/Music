@@ -7,9 +7,9 @@
         <ErrorMessage v-else class="text-red-600" name="comment" />
         <vee-field as="textarea" name="comment" :disabled="textarea" @focus="checkAuth"
             class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded mb-4"
-            placeholder="Your comment here..." />
+            :placeholder="$t('song.comment')" />
         <button :disabled="in_submission" type="submit" class="py-1.5 px-3 rounded text-white bg-green-600 block">
-            Submit
+            {{ $t("register.submit") }}
         </button>
     </vee-form>
 </template>

@@ -8,7 +8,7 @@
             <label class="inline-block mb-2">{{ $t("register.name") }}</label>
             <vee-field name="name" type="text"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                placeholder="Enter Name" />
+                :placeholder="$t('register.enter_name')" />
             <error-message class="text-red-600" name="name" />
         </div>
         <!-- Listener/Artist -->
@@ -29,7 +29,7 @@
             <label class="inline-block mb-2">Email</label>
             <vee-field name="email" type="email"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                placeholder="Enter Email" />
+                :placeholder="$t('register.enter_email')" />
             <error-message class="text-red-600" name="email" />
         </div>
         <!-- Age -->
@@ -45,7 +45,7 @@
             <vee-field name="password" v-slot="{ field, errors }" :bails="false">
                 <input type="password"
                     class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                    placeholder="Password" v-bind="field" />
+                    :placeholder="$t('register.password')" v-bind="field" />
                 <div class="text-red-600" v-for="error in errors" :key="error">
                     {{ error }}
                 </div>
@@ -56,7 +56,7 @@
             <label class="inline-block mb-2">{{ $t("register.confirm") }}</label>
             <vee-field name="confirm_password" type="password"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                placeholder="Confirm Password" />
+                :placeholder="$t('register.confirm_password')" />
             <error-message class="text-red-600" name="confirm_password" />
         </div>
         <!-- Country -->

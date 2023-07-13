@@ -5,7 +5,8 @@
     "songs": "Songs"
   },
   "song": {
-    "comment_count": "No comments | 1 comment | {count} comments"
+    "comment_count": "No comments | 1 comment | {count} comments",
+    "comment": "Your comment here..."
   },
   "header": {
     "about": "About",
@@ -30,7 +31,10 @@
     "brazil": "Brazil",
     "accept": "I accept Music's {0}",
     "tos": "Terms of Service",
-    "submit": "Submit"
+    "submit": "Submit",
+    "enter_name": "Enter Name",
+    "enter_email": "Enter email",
+    "confirm_password": "Confirm password"
   },
   "manage": {
     "drop": "Drop your files here",

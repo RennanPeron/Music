@@ -5,7 +5,8 @@
     "songs": "Músicas"
   },
   "song": {
-    "comment_count": "Nenhum comentário | 1 comentário | {count} comentários"
+    "comment_count": "Nenhum comentário | 1 comentário | {count} comentários",
+    "comment": "Comente aqui..."
   },
   "header": {
     "about": "Sobre",
@@ -30,7 +31,10 @@
     "brazil": "Brasil",
     "accept": "Eu aceito os {0} de Music",
     "tos": "Termos de Serviço",
-    "submit": "Enviar"
+    "submit": "Enviar",
+    "enter_name": "Seu nome",
+    "enter_email": "Seu email",
+    "confirm_password": "Confirmação da senha"
   },
   "manage": {
     "drop": "Arraste seus arquivos aqui",
