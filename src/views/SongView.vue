@@ -131,17 +131,18 @@ export default {
             const minutesInHour = 60
             const minutesInDay = 1440 // 60 minutos * 24 horas
 
-            if (diff <= 1) {
-                return ''
-            }
 
             if (this.$i18n.locale === 'pt') {
+                if (diff <= 1) {
+                    return 'Agora pouco'
+                }
                 return diff < minutesInHour ?
                     `${diff} minutos atrás.`
                     : diff < minutesInDay ?
                         `${Math.floor(diff / minutesInHour)} hora${diff < minutesInHour * 2 ? '' : 's'} atrás.`
                         : `${Math.floor(diff / minutesInDay)} dia${diff < minutesInDay * 2 ? '' : 's'} atrás.`
             } else {
+                if (diff <= 1) return 'Just now'
                 return diff < minutesInHour ?
                     `${diff} minutes ago.`
                     : diff < minutesInDay ?
