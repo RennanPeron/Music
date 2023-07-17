@@ -44,10 +44,12 @@ export default {
             unsaved_flag: false
         }
     },
-    async created() {
+    async beforeRouteEnter(to, from, next) {
         const snapshot = await songsCollection.where('uid', '==', auth.currentUser.uid).get()
 
-        snapshot.forEach(this.addSong)
+        next((vm => {
+            snapshot.forEach(vm.addSong)
+        }))
     },
     methods: {
         updateSongs(index, values) {
