@@ -8,9 +8,13 @@ import { auth } from './includes/firebase.js'
 import Icon from './directives/icon'
 import i18n from './includes/i18n'
 import GlobalComponents from './includes/_globals'
+import progressBar from './includes/progressbar.js'
 
 import './assets/base.css'
 import './assets/main.css'
+import 'nprogress/nprogress.css'
+
+progressBar(router)
 
 let app
 
