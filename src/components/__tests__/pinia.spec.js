@@ -9,7 +9,7 @@ vi.mock('@/includes/firebase', () => ({
   }
 }))
 
-describe('stores', () => {
+describe('Stores', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
   })
