@@ -16,7 +16,7 @@
             <input type="file" multiple @change="upload($event)">
             <hr class="my-6" />
             <!-- Progess Bars -->
-            <div class="mb-4" v-for="upload in uploads" :key="upload.name">
+            <div class="mb-4 uploaded-songs" v-for="upload in uploads" :key="upload.name">
                 <!-- File Name -->
                 <div class="font-bold text-sm" :class="upload.text_class"> <i :class="upload.icon"></i> {{ upload.name }}
                 </div>

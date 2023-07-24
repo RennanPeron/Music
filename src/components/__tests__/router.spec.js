@@ -2,7 +2,7 @@ import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import SongItem from '@/components/SongItem.vue'
 
 describe('Router', () => {
-  test('renders router link', () => {
+  test('SongItem renders router link', () => {
     const song = {
       docID: 'test'
     }
