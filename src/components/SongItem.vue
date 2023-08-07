@@ -8,6 +8,10 @@
         </div>
 
         <div class="text-gray-600 text-lg">
+            <span class="pr-5">
+                <i class="fas fa-heart text-1"></i>
+                {{ song.like_count }}
+            </span>
             <router-link custom :to="{ name: 'song', params: { id: song.docID }, hash: '#comments' }" v-slot="{ navigate }">
                 <span class="comments" @click="navigate">
                     <i class="fa fa-comments text-gray-600"></i>
@@ -21,6 +25,6 @@
 <script>
 export default {
     name: "SongItem",
-    props: ["song"]
+    props: ["song"],
 }
 </script>
