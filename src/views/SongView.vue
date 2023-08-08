@@ -17,7 +17,7 @@
                         <div>{{ song.genre }}</div>
                     </div>
                 </div>
-                <like-button :song="song" />
+                <like-button :song="song" :song_id="$route.params.id" @like_increment="song.like_count += 1" />
             </div>
         </section>
         <!-- Form -->

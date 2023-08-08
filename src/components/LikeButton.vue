@@ -8,17 +8,39 @@
 </template>
 
 <script>
+import { likesCollection, songsCollection, auth } from '../includes/firebase'
+
 import useUserStore from '@/stores/user'
 import { mapState } from 'pinia'
 
 export default {
     name: 'LikeButton',
-    props: ['song'],
+    props: {
+        song_id: {
+            type: String,
+            required: true
+        },
+        song: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
             icon: 'far fa-heart',
-            animate: ''
+            liked: false,
+            animate: '',
         }
+    },
+    async beforeMount() {
+        const snapshot = await likesCollection.where('songId', '==', this.song_id).where('userId', '==', auth.currentUser.uid).get()
+
+        snapshot.forEach(el => {
+            if (el) {
+                this.icon = 'fas fa-heart'
+                this.liked = true
+            }
+        })
     },
     computed: {
         ...mapState(useUserStore, ['userLoggedIn'])
@@ -31,14 +53,26 @@ export default {
                 return
             }
 
-            // this.song.like_count++
+            if (this.liked) {
+                return
+            }
 
-            // try {
-            //      const user = await usersCollection.doc(`${auth.currentUser.uid}`)
-            //      console.log(user)
-            // } catch (e) {
-            //     console.log(e)
-            // }
+            try {
+                const like = {
+                    userId: auth.currentUser.uid,
+                    songId: this.song_id
+                }
+
+                await likesCollection.add(like)
+
+                this.$emit('like_increment')
+
+                this.icon = 'fas fa-heart'
+
+                await songsCollection.doc(this.song_id).update(this.song)
+            } catch (e) {
+                console.log(e)
+            }
         }
     }
 }
