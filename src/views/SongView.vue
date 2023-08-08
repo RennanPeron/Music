@@ -17,7 +17,8 @@
                         <div>{{ song.genre }}</div>
                     </div>
                 </div>
-                <like-button :song="song" :song_id="$route.params.id" @like_increment="song.like_count += 1" />
+                <like-button :song="song" :song_id="$route.params.id" @like_increment="song.like_count += 1"
+                    @like_decrement="song.like_count -= 1" />
             </div>
         </section>
         <!-- Form -->
@@ -66,7 +67,7 @@ import { songsCollection, commentsCollection } from "@/includes/firebase"
 import { mapActions, mapState } from "pinia"
 import usePlayerStore from '@/stores/player'
 
-import CommentForm from "../components/CommentForm.vue"
+import CommentForm from "@/components/CommentForm.vue"
 import LikeButton from "@/components/LikeButton.vue"
 
 export default {
