@@ -19,7 +19,7 @@ import AppAuth from '@/components/AppAuth.vue'
 import AppPlayer from '@/components/AppPlayer.vue'
 import { mapWritableState } from 'pinia';
 import useUserStore from '@/stores/user'
-import { auth } from './includes/firebase';
+import { auth, usersCollection } from './includes/firebase';
 import { RouterView } from 'vue-router';
 
 export default {
@@ -33,9 +33,20 @@ export default {
   computed: {
     ...mapWritableState(useUserStore, ["userLoggedIn"])
   },
-  created() {
+  async created() {
     if (auth.currentUser) {
       this.userLoggedIn = true
+
+      try {
+        const snapshot = await usersCollection.doc(auth.currentUser.uid).get()
+
+        if (snapshot.exists) {
+          if (snapshot.data().country == "Brazil")
+            this.$i18n.locale = 'pt'
+        }
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
