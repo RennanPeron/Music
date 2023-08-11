@@ -24,9 +24,17 @@
                     <span class="card-title">{{ $t("home.songs") }}</span>
                     <!-- Icon -->
                 </div>
+                <!-- Sort Songs -->
+                <select
+                    class="block w-32 ml-auto mr-3 mt-3 py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
+                    v-model="sort">
+                    <option value="1">{{ $t("home.latest") }}</option>
+                    <option value="2">{{ $t("home.oldest") }}</option>
+                    <option value="3">{{ $t("home.relevance") }}</option>
+                </select>
                 <!-- Playlist -->
                 <ol id="playlist">
-                    <song-item v-for="song in songs" :key="song.docID" :song="song" />
+                    <song-item :list="songs" :sort="sort" />
                 </ol>
                 <!-- .. end Playlist -->
             </div>
@@ -45,7 +53,8 @@ export default {
         return {
             songs: [],
             maxPerPage: 25,
-            pendingRequests: false
+            pendingRequests: false,
+            sort: "1"
         }
     },
     components: {

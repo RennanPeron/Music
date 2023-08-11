@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import useUserStore from '@/stores/user'
 
 const Home = () => import('@/views/HomeView.vue')
-const About = () => import('@/views/AboutView.vue')
+// const About = () => import('@/views/AboutView.vue')
 const Manage = () => import('@/views/ManageView.vue')
 const Song = () => import('@/views/SongView.vue')
 
@@ -12,11 +12,11 @@ const routes = [
     path: '/',
     component: Home
   },
-  {
-    name: 'about',
-    path: '/about',
-    component: About
-  },
+  // {
+  //   name: 'about',
+  //   path: '/about',
+  //   component: About
+  // },
   {
     name: 'manage',
     path: '/manage',

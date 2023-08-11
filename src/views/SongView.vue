@@ -37,26 +37,15 @@
                     <select
                         class="block mt-4 py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                         v-model="sort">
-                        <option value="1">Latest</option>
-                        <option value="2">Oldest</option>
+                        <option value="1">{{ $t('home.latest') }}</option>
+                        <option value="2">{{ $t('home.oldest') }}</option>
                     </select>
                 </div>
             </div>
         </section>
         <!-- Comments -->
         <ul class="container mx-auto" id="comments">
-            <li class="p-6 bg-gray-50 border border-gray-200 comment-item" v-for="commentary in sortedComments"
-                :key="commentary.docID">
-                <!-- Comment Author -->
-                <div class="mb-5">
-                    <div class="font-bold">{{ commentary.author }}</div>
-                    <time>{{ getTimeDiff(new Date(commentary.datePosted)) }}</time>
-                </div>
-
-                <p>
-                    {{ commentary.comment }}
-                </p>
-            </li>
+            <comment-item :list="comments" :sort="sort" />
         </ul>
     </main>
 </template>
@@ -69,19 +58,20 @@ import usePlayerStore from '@/stores/player'
 
 import CommentForm from "@/components/CommentForm.vue"
 import LikeButton from "@/components/LikeButton.vue"
+import CommentItem from "../components/CommentItem.vue"
 
 export default {
     name: 'SongView',
     components: {
         CommentForm,
-        LikeButton
+        LikeButton,
+        CommentItem
     },
     data() {
         return {
             song: {},
             comments: [],
             sort: "1",
-            currentDate: new Date(),
             timeType: ''
         }
     },
@@ -106,14 +96,6 @@ export default {
     },
     computed: {
         ...mapState(usePlayerStore, ["playing", "current_song"]),
-        sortedComments() {
-            return this.comments.slice().sort((a, b) => {
-                if (this.sort === "1") {
-                    return new Date(b.datePosted) - new Date(a.datePosted)
-                } else
-                    return new Date(a.datePosted) - new Date(b.datePosted)
-            })
-        },
         playButton() {
             if (this.current_song.modified_name != this.song.modified_name) {
                 return false
@@ -136,43 +118,6 @@ export default {
                 })
             })
         },
-        getTimeDiff(date) {
-            const diff = Math.floor((this.currentDate - date) / (1000 * 60)) || 0 // diferença em minutos
-            const minutesInHour = 60
-            const minutesInDay = 1440 // 60 minutos * 24 horas
-
-
-            if (this.$i18n.locale === 'pt') {
-                if (diff <= 1) {
-                    return 'Agora pouco'
-                }
-                return diff < minutesInHour ?
-                    `${diff} minutos atrás.`
-                    : diff < minutesInDay ?
-                        `${Math.floor(diff / minutesInHour)} hora${diff < minutesInHour * 2 ? '' : 's'} atrás.`
-                        : `${Math.floor(diff / minutesInDay)} dia${diff < minutesInDay * 2 ? '' : 's'} atrás.`
-            } else {
-                if (diff <= 1) return 'Just now'
-                return diff < minutesInHour ?
-                    `${diff} minutes ago.`
-                    : diff < minutesInDay ?
-                        `${Math.floor(diff / minutesInHour)} hour${diff < minutesInHour * 2 ? '' : 's'} ago.`
-                        : `${Math.floor(diff / minutesInDay)} day${diff < minutesInDay * 2 ? '' : 's'} ago.`
-            }
-        }
-    },
-    watch: {
-        sort(newVal) {
-            if (newVal === this.$route.query.sort) {
-                return
-            }
-
-            this.$router.push({
-                query: {
-                    sort: newVal
-                }
-            })
-        }
     }
 }
 </script>

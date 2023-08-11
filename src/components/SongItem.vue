@@ -1,5 +1,6 @@
 <template>
-    <li class="flex justify-between items-center p-3 pl-6 cursor-pointer transition duration-300 hover:bg-gray-50">
+    <li v-for="song in sortedList" :key="song.docID" :song="song"
+        class="flex justify-between items-center p-3 pl-6 cursor-pointer transition duration-300 hover:bg-gray-50">
         <div>
             <router-link :to="{ name: 'song', params: { id: song.docID } }"
                 class="font-bold block text-gray-600 composition-item">{{
@@ -23,8 +24,11 @@
 </template>
 
 <script>
+import sortList from '@/mixins/sortList';
+
 export default {
     name: "SongItem",
-    props: ["song"],
+    mixins: [sortList],
+    props: ["list"],
 }
 </script>
